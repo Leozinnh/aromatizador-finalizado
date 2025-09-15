@@ -699,18 +699,44 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
+            // Footer fixo com copyright e dados da empresa
             Positioned(
               bottom: 0,
+              left: 0,
               right: 0,
-              child: Padding(
-                padding: EdgeInsets.only(right: 12, bottom: 12),
-                child: Text(
-                  'Criado por Leonardo Alves',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.blueGrey.shade400,
-                    fontStyle: FontStyle.italic,
-                  ),
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                color: Colors.blueGrey.shade50,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      '© 2025 HomeLoft Automação e Tecnologia',
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.blueGrey.shade700,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(height: 2),
+                    Text(
+                      'CNPJ: 12.345.678/0001-99',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.blueGrey.shade500,
+                      ),
+                    ),
+                    SizedBox(height: 2),
+                    Text(
+                      'Desenvolvido por Leonardo Alves',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.blueGrey.shade400,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

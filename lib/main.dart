@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
   BluetoothCharacteristic? txCharacteristic;
   BluetoothCharacteristic? rxCharacteristic;
   bool isConnected = false;
-  String sprayStatus = '';
+  // Removido o status fixo
 
   // Configurações
   final serviceUUID = "4c656f6e-6172-646f-416c-766573000000";
@@ -364,53 +364,7 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // Indicador de status do spray
-                    if (sprayStatus.isNotEmpty)
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 18.0),
-                        child: Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: sprayStatus == 'Spray LIGADO!'
-                                ? Colors.green.shade100
-                                : Colors.red.shade100,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: sprayStatus == 'Spray LIGADO!'
-                                  ? Colors.green.shade400
-                                  : Colors.red.shade400,
-                              width: 2,
-                            ),
-                          ),
-                          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 8),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                sprayStatus == 'Spray LIGADO!'
-                                    ? Icons.play_arrow
-                                    : Icons.stop,
-                                color: sprayStatus == 'Spray LIGADO!'
-                                    ? Colors.green.shade700
-                                    : Colors.red.shade700,
-                                size: 28,
-                              ),
-                              const SizedBox(width: 10),
-                              Text(
-                                sprayStatus,
-                                style: TextStyle(
-                                  color: sprayStatus == 'Spray LIGADO!'
-                                      ? Colors.green.shade700
-                                      : Colors.red.shade700,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                  letterSpacing: 1.1,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                    // Indicador removido, agora será SnackBar
                     Text(
                       'Dias de Funcionamento',
                       style: Theme.of(context).textTheme.titleLarge,
@@ -485,9 +439,23 @@ class _HomePageState extends State<HomePage> {
                                       utf8.encode('GET /1H'),
                                       withoutResponse: false,
                                     );
-                                    setState(() {
-                                      sprayStatus = 'Spray LIGADO!';
-                                    });
+                                    if (context.mounted) {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Row(
+                                            children: [
+                                              Icon(Icons.play_arrow, color: Colors.green.shade700),
+                                              SizedBox(width: 10),
+                                              Text('Spray LIGADO!', style: TextStyle(color: Colors.green.shade700, fontWeight: FontWeight.bold)),
+                                            ],
+                                          ),
+                                          backgroundColor: Colors.green.shade100,
+                                          behavior: SnackBarBehavior.floating,
+                                          margin: EdgeInsets.only(top: 16, left: 16, right: 16),
+                                          duration: Duration(seconds: 2),
+                                        ),
+                                      );
+                                    }
                                   }
                                 }
                               : null,
@@ -507,9 +475,23 @@ class _HomePageState extends State<HomePage> {
                                       utf8.encode('GET /1L'),
                                       withoutResponse: false,
                                     );
-                                    setState(() {
-                                      sprayStatus = 'Spray DESLIGADO!';
-                                    });
+                                    if (context.mounted) {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Row(
+                                            children: [
+                                              Icon(Icons.stop, color: Colors.red.shade700),
+                                              SizedBox(width: 10),
+                                              Text('Spray DESLIGADO!', style: TextStyle(color: Colors.red.shade700, fontWeight: FontWeight.bold)),
+                                            ],
+                                          ),
+                                          backgroundColor: Colors.red.shade100,
+                                          behavior: SnackBarBehavior.floating,
+                                          margin: EdgeInsets.only(top: 16, left: 16, right: 16),
+                                          duration: Duration(seconds: 2),
+                                        ),
+                                      );
+                                    }
                                   }
                                 }
                               : null,

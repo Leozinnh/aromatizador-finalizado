@@ -647,30 +647,30 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            // Footer copyright relativo, dentro do fluxo do Column
-            Padding(
-              padding: const EdgeInsets.only(top: 32, bottom: 8),
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-                color: Colors.blueGrey.shade50,
+            // Footer copyright como Card, igual aos outros blocos
+            const SizedBox(height: 32),
+            Card(
+              margin: const EdgeInsets.only(bottom: 16),
+              color: Colors.blueGrey,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      '© 2025 HomeLoft Automação e Tecnologia',
+                      '© 2025 ESSENCIAS E AROMY INDUSTRIA E COMERCIO DE PERFUMARIA E COSMETICOS LTDA',
                       style: TextStyle(
-                        fontSize: 13,
-                        color: Colors.blueGrey.shade700,
+                        fontSize: 14,
+                        color: Colors.white,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     SizedBox(height: 2),
                     Text(
-                      'CNPJ: 12.345.678/0001-99',
+                      'CNPJ: 54.441.580/0001-81',
                       style: TextStyle(
                         fontSize: 12,
-                        color: Colors.blueGrey.shade500,
+                        color: Colors.white70,
                       ),
                     ),
                     SizedBox(height: 2),
@@ -678,7 +678,7 @@ class _HomePageState extends State<HomePage> {
                       'Desenvolvido por Leonardo Alves',
                       style: TextStyle(
                         fontSize: 12,
-                        color: Colors.blueGrey.shade400,
+                        color: Colors.white60,
                         fontStyle: FontStyle.italic,
                       ),
                     ),

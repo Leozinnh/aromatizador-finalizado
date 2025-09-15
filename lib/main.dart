@@ -159,8 +159,8 @@ class _HomePageState extends State<HomePage> {
     print('Enviando: $config');
 
     try {
-      // Primeiro sincroniza o horário
-      await sendCurrentTime();
+      // Primeiro sincroniza o horário (sem mostrar mensagem)
+      await sendCurrentTimeQuiet();
 
       // Depois envia a configuração
       await rxCharacteristic!.write(
@@ -168,12 +168,7 @@ class _HomePageState extends State<HomePage> {
         withoutResponse: false,
       );
       print('Configuração enviada via BLE!');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Configuração enviada com sucesso!'),
-          backgroundColor: Colors.green,
-        ),
-      );
+      _showConfigSuccessDialog(context);
     } catch (e) {
       print('Erro ao enviar configuração: $e');
       setState(() => isConnected = false);
@@ -203,6 +198,35 @@ class _HomePageState extends State<HomePage> {
       );
       print('Horário enviado via BLE!');
       _showSuccessDialog(context);
+    } catch (e) {
+      print('Erro ao enviar horário: $e');
+      setState(() => isConnected = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Bluetooth desconectado! Conecte novamente ao dispositivo.',
+          ),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+  Future<void> sendCurrentTimeQuiet() async {
+    if (!isConnected || rxCharacteristic == null) {
+      print('Não conectado ou characteristic não encontrada');
+      return;
+    }
+    int unixTime = DateTime.now().toUtc().millisecondsSinceEpoch ~/ 1000;
+    String payload = 'UT$unixTime';
+    print('Enviando horário (silencioso): $payload');
+    try {
+      await rxCharacteristic!.write(
+        utf8.encode(payload),
+        withoutResponse: false,
+      );
+      print('Horário enviado via BLE (silencioso)!');
+      // Não mostra mensagem de sucesso
     } catch (e) {
       print('Erro ao enviar horário: $e');
       setState(() => isConnected = false);
@@ -661,7 +685,7 @@ Future<void> pedirPermissoesBluetooth(BuildContext context) async {
   }
 }
 
-// Função para mostrar diálogo de sucesso
+// Função para mostrar diálogo de sucesso da sincronização
 void _showSuccessDialog(BuildContext context) {
   showDialog(
     context: context,
@@ -674,6 +698,35 @@ void _showSuccessDialog(BuildContext context) {
         ),
         content: const Text(
           'Horário sincronizado com sucesso!',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 16),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+// Função para mostrar diálogo de sucesso da configuração
+void _showConfigSuccessDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Icon(
+          Icons.check_circle,
+          color: Colors.green,
+          size: 60,
+        ),
+        content: const Text(
+          'Configuração enviada com sucesso!',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 16),
         ),

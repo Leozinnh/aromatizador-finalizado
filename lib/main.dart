@@ -643,58 +643,6 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ElevatedButton.icon(
-                          onPressed: isConnected
-                              ? () async {
-                                  if (rxCharacteristic != null) {
-                                    await rxCharacteristic!.write(
-                                      utf8.encode('GET /1H'),
-                                      withoutResponse: false,
-                                    );
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text('Spray LIGADO!')),
-                                    );
-                                  }
-                                }
-                              : null,
-                          icon: Icon(Icons.play_arrow),
-                          label: Text('Ligar Spray'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 14, horizontal: 18),
-                          ),
-                        ),
-                        ElevatedButton.icon(
-                          onPressed: isConnected
-                              ? () async {
-                                  if (rxCharacteristic != null) {
-                                    await rxCharacteristic!.write(
-                                      utf8.encode('GET /1L'),
-                                      withoutResponse: false,
-                                    );
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text('Spray DESLIGADO!')),
-                                    );
-                                  }
-                                }
-                              : null,
-                          icon: Icon(Icons.stop),
-                          label: Text('Desligar Spray'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red,
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 14, horizontal: 18),
-                          ),
-                        ),
-                      ],
-                    ),
                   ],
                 ),
               ),

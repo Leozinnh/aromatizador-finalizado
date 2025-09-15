@@ -189,7 +189,8 @@ class _HomePageState extends State<HomePage> {
       return;
     }
     int unixTime = DateTime.now().toUtc().millisecondsSinceEpoch ~/ 1000;
-    String payload = 'UT$unixTime';
+    int rtcTime = unixTime - 946684800 - 10800; // Ajuste para RTC e fuso
+    String payload = 'UT$rtcTime';
     print('Enviando horário: $payload');
     try {
       await rxCharacteristic!.write(
@@ -218,7 +219,8 @@ class _HomePageState extends State<HomePage> {
       return;
     }
     int unixTime = DateTime.now().toUtc().millisecondsSinceEpoch ~/ 1000;
-    String payload = 'UT$unixTime';
+    int rtcTime = unixTime - 946684800 - 10800; // Ajuste para RTC e fuso
+    String payload = 'UT$rtcTime';
     print('Enviando horário (silencioso): $payload');
     try {
       await rxCharacteristic!.write(
@@ -570,7 +572,7 @@ class _HomePageState extends State<HomePage> {
               bottom: 0,
               right: 0,
               child: Padding(
-                padding: EdgeInsets.only(right: 8, bottom: 4),
+                padding: EdgeInsets.only(right: 12, bottom: 4),
                 child: Text(
                   'Criado por Leonardo Alves',
                   style: TextStyle(

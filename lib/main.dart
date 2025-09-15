@@ -427,85 +427,6 @@ class _HomePageState extends State<HomePage> {
                       }),
                     ),
                     const SizedBox(height: 32),
-                    // Botões de ligar/desligar spray
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ElevatedButton.icon(
-                          onPressed: isConnected
-                              ? () async {
-                                  if (rxCharacteristic != null) {
-                                    await rxCharacteristic!.write(
-                                      utf8.encode('GET /1H'),
-                                      withoutResponse: false,
-                                    );
-                                    if (context.mounted) {
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                          content: Row(
-                                            children: [
-                                              Icon(Icons.play_arrow, color: Colors.green.shade700),
-                                              SizedBox(width: 10),
-                                              Text('Spray LIGADO!', style: TextStyle(color: Colors.green.shade700, fontWeight: FontWeight.bold)),
-                                            ],
-                                          ),
-                                          backgroundColor: Colors.green.shade100,
-                                          behavior: SnackBarBehavior.floating,
-                                          margin: EdgeInsets.only(top: 16, left: 16, right: 16),
-                                          duration: Duration(seconds: 2),
-                                        ),
-                                      );
-                                    }
-                                  }
-                                }
-                              : null,
-                          icon: Icon(Icons.play_arrow),
-                          label: Text('Ligar Spray'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 18),
-                          ),
-                        ),
-                        ElevatedButton.icon(
-                          onPressed: isConnected
-                              ? () async {
-                                  if (rxCharacteristic != null) {
-                                    await rxCharacteristic!.write(
-                                      utf8.encode('GET /1L'),
-                                      withoutResponse: false,
-                                    );
-                                    if (context.mounted) {
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                          content: Row(
-                                            children: [
-                                              Icon(Icons.stop, color: Colors.red.shade700),
-                                              SizedBox(width: 10),
-                                              Text('Spray DESLIGADO!', style: TextStyle(color: Colors.red.shade700, fontWeight: FontWeight.bold)),
-                                            ],
-                                          ),
-                                          backgroundColor: Colors.red.shade100,
-                                          behavior: SnackBarBehavior.floating,
-                                          margin: EdgeInsets.only(top: 16, left: 16, right: 16),
-                                          duration: Duration(seconds: 2),
-                                        ),
-                                      );
-                                    }
-                                  }
-                                }
-                              : null,
-                          icon: Icon(Icons.stop),
-                          label: Text('Desligar Spray'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red,
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 18),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 32),
                     Text(
                       'Horários - Dias Úteis (Seg - Sex)',
                       style: Theme.of(context).textTheme.titleLarge,
@@ -643,6 +564,85 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 16),
+                    // Botões de ligar/desligar spray
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton.icon(
+                          onPressed: isConnected
+                              ? () async {
+                                  if (rxCharacteristic != null) {
+                                    await rxCharacteristic!.write(
+                                      utf8.encode('GET /1H'),
+                                      withoutResponse: false,
+                                    );
+                                    if (context.mounted) {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Row(
+                                            children: [
+                                              Icon(Icons.play_arrow, color: Colors.green.shade700),
+                                              SizedBox(width: 10),
+                                              Text('Spray LIGADO!', style: TextStyle(color: Colors.green.shade700, fontWeight: FontWeight.bold)),
+                                            ],
+                                          ),
+                                          backgroundColor: Colors.green.shade100,
+                                          behavior: SnackBarBehavior.floating,
+                                          margin: EdgeInsets.only(top: 16, left: 16, right: 16),
+                                          duration: Duration(seconds: 2),
+                                        ),
+                                      );
+                                    }
+                                  }
+                                }
+                              : null,
+                          icon: Icon(Icons.play_arrow),
+                          label: Text('Ligar Spray'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green,
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 18),
+                          ),
+                        ),
+                        ElevatedButton.icon(
+                          onPressed: isConnected
+                              ? () async {
+                                  if (rxCharacteristic != null) {
+                                    await rxCharacteristic!.write(
+                                      utf8.encode('GET /1L'),
+                                      withoutResponse: false,
+                                    );
+                                    if (context.mounted) {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Row(
+                                            children: [
+                                              Icon(Icons.stop, color: Colors.red.shade700),
+                                              SizedBox(width: 10),
+                                              Text('Spray DESLIGADO!', style: TextStyle(color: Colors.red.shade700, fontWeight: FontWeight.bold)),
+                                            ],
+                                          ),
+                                          backgroundColor: Colors.red.shade100,
+                                          behavior: SnackBarBehavior.floating,
+                                          margin: EdgeInsets.only(top: 16, left: 16, right: 16),
+                                          duration: Duration(seconds: 2),
+                                        ),
+                                      );
+                                    }
+                                  }
+                                }
+                              : null,
+                          icon: Icon(Icons.stop),
+                          label: Text('Desligar Spray'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 18),
+                          ),
+                        ),
+                      ],
+                    ),
                     // Footer copyright como Card, igual aos outros blocos
                     const SizedBox(height: 32),
                     Card(
@@ -753,6 +753,8 @@ class DevicesScreen extends StatefulWidget {
 }
 
 class _DevicesScreenState extends State<DevicesScreen> {
+  bool _isConnecting = false;
+
   @override
   void initState() {
     super.initState();
@@ -795,11 +797,29 @@ class _DevicesScreenState extends State<DevicesScreen> {
               return ListTile(
                 title: Text(result.device.platformName),
                 subtitle: Text(result.device.remoteId.toString()),
-                onTap: () async {
-                  FlutterBluePlus.stopScan();
-                  final device = result.device;
-                  await device.connect(timeout: Duration(seconds: 10));
-                  Navigator.pop(context, device);
+                onTap: _isConnecting ? null : () async {
+                  if (_isConnecting) return; // Evita múltiplos cliques
+                  
+                  setState(() => _isConnecting = true);
+                  
+                  try {
+                    FlutterBluePlus.stopScan();
+                    final device = result.device;
+                    await device.connect(timeout: Duration(seconds: 10));
+                    if (mounted) {
+                      Navigator.pop(context, device);
+                    }
+                  } catch (e) {
+                    if (mounted) {
+                      setState(() => _isConnecting = false);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Erro ao conectar: $e'),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
+                  }
                 },
               );
             },

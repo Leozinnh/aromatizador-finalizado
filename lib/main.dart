@@ -699,11 +699,9 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            // Footer fixo com copyright e dados da empresa
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
+            // Footer copyright relativo, dentro do fluxo do Column
+            Padding(
+              padding: const EdgeInsets.only(top: 32, bottom: 8),
               child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),

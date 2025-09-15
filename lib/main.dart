@@ -643,43 +643,95 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ),
-            ),
-            // Footer copyright como Card, igual aos outros blocos
-            const SizedBox(height: 32),
-            Card(
-              margin: const EdgeInsets.only(bottom: 16),
-              color: Colors.blueGrey,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      '© 2025 ESSENCIAS E AROMY INDUSTRIA E COMERCIO DE PERFUMARIA E COSMETICOS LTDA',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
+                    // Footer copyright como Card, igual aos outros blocos
+                    const SizedBox(height: 32),
+                    Card(
+                      margin: const EdgeInsets.only(bottom: 16),
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                    ),
-                    SizedBox(height: 2),
-                    Text(
-                      'CNPJ: 54.441.580/0001-81',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.white70,
-                      ),
-                    ),
-                    SizedBox(height: 2),
-                    Text(
-                      'Desenvolvido por Leonardo Alves',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.white60,
-                        fontStyle: FontStyle.italic,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [Colors.blueGrey.shade600, Colors.blueGrey.shade800],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                Icons.business,
+                                color: Colors.white,
+                                size: 32,
+                              ),
+                              const SizedBox(height: 12),
+                              Text(
+                                '© 2025 ESSENCIAS E AROMY',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                              Text(
+                                'INDUSTRIA E COMERCIO DE PERFUMARIA E COSMETICOS LTDA',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.white70,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                child: Text(
+                                  'CNPJ: 54.441.580/0001-81',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                    letterSpacing: 0.3,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              Divider(color: Colors.white24, thickness: 1),
+                              const SizedBox(height: 8),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.code,
+                                    color: Colors.white60,
+                                    size: 16,
+                                  ),
+                                  const SizedBox(width: 6),
+                                  Text(
+                                    'Desenvolvido por Leonardo Alves',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.white60,
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ],

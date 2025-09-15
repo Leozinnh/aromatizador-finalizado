@@ -43,9 +43,14 @@ class _HomePageState extends State<HomePage> {
   final rxUUID = "4c656f6e-6172-646f-416c-766573000001";
   final txUUID = "4c656f6e-6172-646f-416c-766573000002";
 
-  // Controles de formulário
+  // Controles de formulário - Dias úteis (segunda a sexta)
   TimeOfDay startTime = const TimeOfDay(hour: 8, minute: 0);
   TimeOfDay endTime = const TimeOfDay(hour: 15, minute: 0);
+  
+  // Controles de formulário - Final de semana (sábado e domingo)
+  TimeOfDay weekendStartTime = const TimeOfDay(hour: 9, minute: 0);
+  TimeOfDay weekendEndTime = const TimeOfDay(hour: 14, minute: 0);
+  
   int interval = 300; // 5 minutos em segundos
   int sprayDuration = 15; // segundos
   List<bool> weekDays = List.generate(7, (index) => true);
@@ -146,8 +151,10 @@ class _HomePageState extends State<HomePage> {
       if (weekDays[i]) daysMask |= (1 << i);
     }
 
+    // Configuração com horários separados para dias úteis e final de semana
+    // Formato: GET /4,daysMask,interval,sprayDuration,weekdayStartH,weekdayStartM,weekdayEndH,weekdayEndM,weekendStartH,weekendStartM,weekendEndH,weekendEndM,
     String config =
-        'GET /4,$daysMask,$interval,$sprayDuration,${startTime.hour},${startTime.minute},${endTime.hour},${endTime.minute},${startTime.hour},${startTime.minute},${endTime.hour},${endTime.minute},';
+        'GET /4,$daysMask,$interval,$sprayDuration,${startTime.hour},${startTime.minute},${endTime.hour},${endTime.minute},${weekendStartTime.hour},${weekendStartTime.minute},${weekendEndTime.hour},${weekendEndTime.minute},';
 
     print('Enviando: $config');
 
@@ -195,6 +202,7 @@ class _HomePageState extends State<HomePage> {
         withoutResponse: false,
       );
       print('Horário enviado via BLE!');
+      _showSuccessDialog(context);
     } catch (e) {
       print('Erro ao enviar horário: $e');
       setState(() => isConnected = false);
@@ -393,6 +401,11 @@ class _HomePageState extends State<HomePage> {
                       }),
                     ),
                     const SizedBox(height: 32),
+                    Text(
+                      'Horários - Dias Úteis (Seg - Sex)',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    const SizedBox(height: 16),
                     Card(
                       child: Column(
                         children: [
@@ -419,6 +432,43 @@ class _HomePageState extends State<HomePage> {
                                 initialTime: endTime,
                               );
                               if (time != null) setState(() => endTime = time);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    Text(
+                      'Horários - Final de Semana (Sáb - Dom)',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    const SizedBox(height: 16),
+                    Card(
+                      child: Column(
+                        children: [
+                          ListTile(
+                            title: const Text('Horário Início'),
+                            trailing: Text(weekendStartTime.format(context)),
+                            onTap: () async {
+                              TimeOfDay? time = await showTimePicker(
+                                context: context,
+                                initialTime: weekendStartTime,
+                              );
+                              if (time != null) {
+                                setState(() => weekendStartTime = time);
+                              }
+                            },
+                          ),
+                          const Divider(),
+                          ListTile(
+                            title: const Text('Horário Fim'),
+                            trailing: Text(weekendEndTime.format(context)),
+                            onTap: () async {
+                              TimeOfDay? time = await showTimePicker(
+                                context: context,
+                                initialTime: weekendEndTime,
+                              );
+                              if (time != null) setState(() => weekendEndTime = time);
                             },
                           ),
                         ],
@@ -609,4 +659,33 @@ Future<void> pedirPermissoesBluetooth(BuildContext context) async {
       return;
     }
   }
+}
+
+// Função para mostrar diálogo de sucesso
+void _showSuccessDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Icon(
+          Icons.check_circle,
+          color: Colors.green,
+          size: 60,
+        ),
+        content: const Text(
+          'Horário sincronizado com sucesso!',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 16),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      );
+    },
+  );
 }
